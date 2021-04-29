@@ -1,0 +1,21 @@
+在java代码的方法参数进行约束，
+  如： ImageCapture.java
+         / * <p>If not set, the capture mode will default to
+         * {@link CaptureMode#CAPTURE_MODE_MINIMIZE_LATENCY}.
+         *
+         * @param captureMode The requested image capture mode.
+         * @return The current Builder.
+         */
+        @NonNull
+        public Builder setCaptureMode(@CaptureMode int captureMode) {
+            getMutableConfig().insertOption(OPTION_IMAGE_CAPTURE_MODE, captureMode);
+            return this;
+        }
+        // 通过注解来进行约束
+        @IntDef({CAPTURE_MODE_MAXIMIZE_QUALITY, CAPTURE_MODE_MINIMIZE_LATENCY})
+        @Retention(RetentionPolicy.SOURCE)
+        @RestrictTo(Scope.LIBRARY_GROUP)
+        public @interface CaptureMode {
+        }
+        
+        
