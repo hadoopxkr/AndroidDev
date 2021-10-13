@@ -1,0 +1,27 @@
+https://cloud.tencent.com/developer/article/1506402   
+
+eg:
+#!/bin/bash
+
+ sed -i 'N;192 a     shared_extension => ".\\$(SHLIB_VERSION_NUMBER).so", ' Configurations/15-android.conf
+ echo open_source_dir=${open_source_dir}
+
+# build armeabi-v7a
+./Configure android-arm shared -D__ANDROID_API__=21 --prefix=${open_source_dir}/openssl/${output_32}
+make && make install
+if [[ $? -ne 0 ]];
+then
+    echo build openssl for armeabi-v7a failed
+    exit 1
+fi
+
+make clean
+
+# build arm64-v8a
+./Configure android-arm64 shared -D__ANDROID_API__=21 --prefix=${open_source_dir}/openssl/${output_64}
+make && make install
+if [[ $? -ne 0 ]];
+then
+    echo build openssl for arm64-v8a failed
+    exit 1
+fi
