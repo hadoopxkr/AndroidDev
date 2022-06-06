@@ -1,0 +1,22 @@
+在Compose中观察对象的某个属性字段的改变
+data class City(
+    private var pName:String,
+    private var pCode :String
+){
+    var name = mutableStateOf(pName)
+    var code = mutableStateOf(pCode)
+}
+
+
+object AppModel:ViewModel(){
+    var city = mutableStateOf(City("深圳","555"))
+    private set
+
+    fun updateCityName(newName:String){
+        Log.i("MainScreen","updateCityName $newName")
+        city.value.name.value = newName
+
+    }
+ }
+ 
+ // 只有这样写  在name 或者code 变化时才会有city对象的变化
